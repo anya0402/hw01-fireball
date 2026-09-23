@@ -29,7 +29,10 @@ class ShaderProgram {
   unifModelInvTr: WebGLUniformLocation;
   unifViewProj: WebGLUniformLocation;
   unifColor: WebGLUniformLocation;
-
+  unifTime: WebGLUniformLocation;
+  unifHeight: WebGLUniformLocation;
+  unifTemperature: WebGLUniformLocation;
+  unifCurl: WebGLUniformLocation;
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
 
@@ -48,6 +51,10 @@ class ShaderProgram {
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj   = gl.getUniformLocation(this.prog, "u_ViewProj");
     this.unifColor      = gl.getUniformLocation(this.prog, "u_Color");
+    this.unifTime       = gl.getUniformLocation(this.prog, "u_Time");
+    this.unifHeight     = gl.getUniformLocation(this.prog, "u_Height");
+    this.unifTemperature = gl.getUniformLocation(this.prog, "u_Temperature");
+    this.unifCurl = gl.getUniformLocation(this.prog, "u_Curl");
   }
 
   use() {
@@ -82,6 +89,34 @@ class ShaderProgram {
     this.use();
     if (this.unifColor !== -1) {
       gl.uniform4fv(this.unifColor, color);
+    }
+  }
+
+  setTime(time: number) {
+    this.use()
+    if (this.unifTime != -1) {
+      gl.uniform1f(this.unifTime, time);
+    }
+  }
+
+  setHeight(height: number) {
+    this.use()
+    if (this.unifHeight != -1) {
+      gl.uniform1f(this.unifHeight, height);
+    }
+  }
+
+  setTemperature(temperature: number) {
+    this.use()
+    if (this.unifTemperature != -1) {
+      gl.uniform1f(this.unifTemperature, temperature);
+    }
+  }
+
+  setCurl(curl: number) {
+    this.use()
+    if (this.unifCurl != -1) {
+      gl.uniform1f(this.unifCurl, curl);
     }
   }
 
