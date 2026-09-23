@@ -1,9 +1,30 @@
 # HW 1: WebGL Fireball
 
+## Result
+
 <p align="center">
-  <img width="360" height="360" src="fireball.png">
+  <img width="800" src="fireball-img.png">
 </p>
-<p align="center">(source: Aidan Gideon, CIS 5660 Fall 2025)</p>
+<p align="center">Live demo: https://anya0402.github.io/hw01-fireball/</p>
+
+<p align="center">
+  <img src="fireball-gif.gif" width="230"/> <img src="fireball-transition2.gif" width="230"/> <img src="blue-fireball-gif.gif" width="230"/> 
+</p>
+
+This fireball was created by displacing vertices on an icosphere using various noise functions. In the vertex shader, I first create a low-frequency, high-amplitude displacement using various sine functions, which depend on the 3D coordinates and time. Then, I add a few layers of higher-frequency, lower-amplitude noise with fractal Brownian motion (fBm). I have two layers of fBm, one to add small detailed noise to the fire, and one to add curls to the fire. For all of my displacements, I scale it relative to how "up" the normal is pointing, so that the noise only gets applied toward the top of the fireball, creating the effect of rising flames.
+
+The color of the fireball was defined in the fragment shader. I have two colors interpolated together based on the depth of the sphere. The interpolation value also incorporates the noise values that were calculated in the vertex shader. I also have a third color that is based on the height of the fireball, so that I could tune the bottom color of the fireball. These three colors are then mixed together. On top of that, I added a small Fresnel effect to attempt a small glow. I also used an impulse function that uses cosine and time to loop, which adds some flare. 
+
+<p align="center">
+  <img src="fireball-controls2.gif">
+</p>
+
+I have three interactive variables exposed to the GUI. The first one controls the height of the flame itself. The second one controls the amount of curl the flames have. The third one is a temperature control. As the temperature increases, the flame gets whiter, and then turns blue. I implemented this by having set color values at the lowest, middle, and highest temperature values, and then interpolating between the values. 
+
+Finally, I render the background as a quad with some fBm noise to act as smoke moving upward.
+
+Toolbox functions used: sine, cosine, smoothstep, and impulse
+
 
 ## Objective
 Get comfortable with using WebGL and its shaders to generate an interesting 3D, continuous surface using a multi-octave noise algorithm.
